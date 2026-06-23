@@ -1,20 +1,55 @@
-# 🎬 CineLens — Premium Movie Discovery Platform
+# 🎬 CineLens
 
-A full-stack movie recommendation platform built with React + Node.js, powered by the TMDB API.
+A full-stack movie discovery and tracking web app built with the **MERN stack**. Browse trending movies, get personalized recommendations, manage your watchlist, rate films, and search across thousands of titles — all powered by the TMDB API.
 
 ---
 
-## 🚀 Tech Stack
+## 🖥️ Live Features
 
-| Layer      | Tech                                             |
-|------------|--------------------------------------------------|
-| Frontend   | React 18 + Vite, Tailwind CSS, Framer Motion    |
-| State      | Redux Toolkit + React Hot Toast                  |
-| Backend    | Node.js + Express.js (MVC)                       |
-| Database   | MongoDB Atlas (Mongoose)                         |
-| Auth       | JWT + bcryptjs                                   |
-| API        | TMDB (The Movie Database)                        |
-| Deploy     | Frontend → Vercel · Backend → Render             |
+- 🔐 **JWT Authentication** — Register, login, and stay logged in securely
+- 🎯 **Personalized Recommendations** — Based on your watch history and favorite genres
+- 🎥 **Hero Section** — Auto-rotating trending movies with trailer previews
+- 🔍 **Search** — Search across thousands of movies in real time
+- 📋 **Watchlist** — Add/remove movies, persisted to your account
+- ⭐ **Ratings** — Rate any movie and view your rating history
+- 🎭 **Browse by Genre** — Filter movies by Action, Horror, Comedy, Sci-Fi, and more
+- 👤 **Profile Page** — Update bio, avatar, and favorite genres
+- 📱 **Fully Responsive** — Works on mobile, tablet, and desktop
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+| Tech | Purpose |
+|---|---|
+| React 19 | UI components and pages |
+| Vite | Dev server and bundler |
+| Redux Toolkit | Global state (auth, movies, watchlist) |
+| React Router v7 | Client-side routing and navigation |
+| Tailwind CSS v4 | Styling and dark theme |
+| Framer Motion | Page transitions and animations |
+| Axios | HTTP requests to the backend API |
+| React Hot Toast | Success/error notifications |
+
+### Backend
+| Tech | Purpose |
+|---|---|
+| Node.js | JavaScript runtime |
+| Express.js | REST API server |
+| MongoDB Atlas | Cloud database |
+| Mongoose | Database models and queries |
+| JWT | Secure authentication tokens |
+| bcryptjs | Password hashing |
+| express-validator | Input validation |
+| Helmet | HTTP security headers |
+| Morgan | Request logging |
+| express-rate-limit | API rate limiting (100 req / 15 min) |
+
+### External
+| Tech | Purpose |
+|---|---|
+| TMDB API | Movie data, posters, trailers, genres |
 
 ---
 
@@ -24,219 +59,268 @@ A full-stack movie recommendation platform built with React + Node.js, powered b
 cinelens/
 ├── frontend/
 │   ├── src/
-│   │   ├── api/          # Axios API clients
-│   │   ├── components/   # Reusable UI components
-│   │   │   ├── common/   # StarRating, ProtectedRoute
-│   │   │   ├── home/     # HeroSection
-│   │   │   ├── layout/   # Navbar, Footer
-│   │   │   ├── movie/    # MovieCard, MovieRow, TrailerModal
-│   │   │   └── search/   # SearchBar
-│   │   ├── hooks/        # Custom React hooks
-│   │   ├── pages/        # Route-level pages
-│   │   ├── store/        # Redux slices
-│   │   └── main.jsx
-│   └── .env.example
+│   │   ├── api/             # Axios instance + all API calls
+│   │   ├── components/
+│   │   │   ├── common/      # ProtectedRoute, ErrorBoundary, StarRating
+│   │   │   ├── home/        # HeroSection
+│   │   │   ├── layout/      # Navbar, Footer
+│   │   │   ├── movie/       # MovieCard, MovieRow, TrailerModal, Skeleton
+│   │   │   └── search/      # SearchBar
+│   │   ├── hooks/           # useWatchlist, useDebounce, useScrollY, etc.
+│   │   ├── pages/           # All page components
+│   │   │   ├── LandingPage.jsx
+│   │   │   ├── HomePage.jsx
+│   │   │   ├── LoginPage.jsx
+│   │   │   ├── RegisterPage.jsx
+│   │   │   ├── MovieDetailsPage.jsx
+│   │   │   ├── SearchPage.jsx
+│   │   │   ├── WatchlistPage.jsx
+│   │   │   ├── ProfilePage.jsx
+│   │   │   ├── GenrePage.jsx
+│   │   │   ├── MoviesPage.jsx
+│   │   │   └── NotFoundPage.jsx
+│   │   └── store/           # Redux store + slices
+│   │       └── slices/      # authSlice, moviesSlice, watchlistSlice, uiSlice
+│   ├── .env.example
+│   └── vite.config.js
+│
 └── backend/
-    ├── config/           # DB connection
-    ├── controllers/      # Business logic
-    ├── middleware/        # Auth middleware
-    ├── models/           # Mongoose schemas
-    ├── routes/           # Express routers
-    ├── utils/            # TMDB service, JWT helpers
-    ├── server.js
-    └── .env.example
+    ├── config/              # MongoDB connection
+    ├── controllers/         # Business logic per feature
+    │   ├── authController.js
+    │   ├── movieController.js
+    │   ├── watchlistController.js
+    │   ├── ratingController.js
+    │   └── userController.js
+    ├── middleware/          # JWT auth middleware (strict + optional)
+    ├── models/              # Mongoose schemas
+    │   ├── User.js
+    │   ├── Watchlist.js
+    │   └── Rating.js
+    ├── routes/              # Express route definitions
+    ├── utils/               # TMDB API helper, JWT token util
+    ├── .env.example
+    └── server.js
 ```
 
 ---
 
-## ⚡ Quick Start
+## 🚀 Getting Started
 
-### 1. Clone & Install
+### Prerequisites
+- Node.js v18+
+- A free [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account
+- A free [TMDB API key](https://www.themoviedb.org/settings/api)
+
+---
+
+### 1. Clone the repo
 
 ```bash
-git clone <your-repo>
+git clone https://github.com/YOUR_USERNAME/cinelens.git
 cd cinelens
-
-# Backend
-cd backend
-npm install
-cp .env.example .env    # Fill in your values
-
-# Frontend
-cd ../frontend
-npm install
-cp .env.example .env    # Fill in your values
 ```
 
-### 2. Get Your API Keys
+---
 
-**TMDB API Key:**
-1. Go to [https://www.themoviedb.org/settings/api](https://www.themoviedb.org/settings/api)
-2. Sign up / log in
-3. Request an API key (free)
-4. Copy the **API Key (v3 auth)**
+### 2. Set up the Backend
 
-**MongoDB Atlas:**
-1. Go to [https://www.mongodb.com/atlas](https://www.mongodb.com/atlas)
-2. Create a free cluster
-3. Create a database user with password
-4. Get the connection string (replace `<password>`)
+```bash
+cd backend
+npm install
+```
 
-### 3. Environment Variables
+Create your `.env` file:
 
-**backend/.env:**
+```bash
+cp .env.example .env
+```
+
+Fill in your values in `.env`:
+
 ```env
 PORT=5000
 NODE_ENV=development
-MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/cinelens
-JWT_SECRET=your_super_secret_32_char_key_here
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/cinelens
+JWT_SECRET=your_super_secret_key_minimum_32_characters
 JWT_EXPIRES_IN=7d
-TMDB_API_KEY=your_tmdb_api_key
+TMDB_API_KEY=your_tmdb_api_key_here
 CLIENT_URL=http://localhost:5173
 ```
 
-**frontend/.env:**
+Start the backend:
+
+```bash
+npm run dev
+```
+
+You should see:
+```
+🎬 CineLens API running on port 5000
+📺 Environment: development
+✅ MongoDB Connected: ...
+```
+
+---
+
+### 3. Set up the Frontend
+
+Open a new terminal:
+
+```bash
+cd frontend
+npm install
+```
+
+Create your `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+The default value works for local development:
+
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-### 4. Run Locally
+Start the frontend:
 
 ```bash
-# Terminal 1 — Backend
-cd backend
-npm run dev     # Runs on http://localhost:5000
-
-# Terminal 2 — Frontend
-cd frontend
-npm run dev     # Runs on http://localhost:5173
+npm run dev
 ```
 
----
-
-## 🌐 Deployment
-
-### Frontend → Vercel
-
-```bash
-cd frontend
-npm run build
-# Push to GitHub → Import in Vercel
-# Add env: VITE_API_URL=https://your-render-url.onrender.com/api
-```
-
-### Backend → Render
-
-1. Push backend folder to GitHub
-2. New Web Service on [render.com](https://render.com)
-3. Build command: `npm install`
-4. Start command: `node server.js`
-5. Add all env variables from `.env.example`
-
----
-
-## 🗃️ MongoDB Models
-
-### User
-```
-username, email, password (hashed), avatar, bio,
-favoriteGenres[], recentlyViewed[], createdAt
-```
-
-### Watchlist
-```
-user (ref), movieId, title, posterPath, overview,
-releaseDate, voteAverage, genres[], addedAt
-```
-
-### Rating
-```
-user (ref), movieId, rating (0.5–5), review,
-movieTitle, posterPath, createdAt
-```
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
 ## 🔌 API Endpoints
 
-### Auth
-```
-POST /api/auth/register    — Create account
-POST /api/auth/login       — Sign in
-GET  /api/auth/me          — Get current user
-PUT  /api/auth/update-profile
+### Auth — `/api/auth`
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| POST | `/register` | ❌ | Create new account |
+| POST | `/login` | ❌ | Login and get JWT token |
+| GET | `/me` | ✅ | Get logged-in user profile |
+| PUT | `/update-profile` | ✅ | Update bio, avatar, genres |
+| PUT | `/change-password` | ✅ | Change password |
+
+### Movies — `/api/movies`
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| GET | `/trending` | ❌ | Trending movies this week |
+| GET | `/popular` | ❌ | Most popular movies |
+| GET | `/top-rated` | ❌ | Highest rated movies |
+| GET | `/upcoming` | ❌ | Upcoming releases |
+| GET | `/now-playing` | ❌ | Currently in theatres |
+| GET | `/search?query=` | ❌ | Search movies |
+| GET | `/genres/list` | ❌ | All genre categories |
+| GET | `/genre/:genreId` | ❌ | Movies by genre |
+| GET | `/:id` | Optional | Movie details + track view |
+| GET | `/:id/similar` | ❌ | Similar movies |
+| GET | `/:id/recommendations` | ❌ | TMDB recommendations |
+| GET | `/:id/videos` | ❌ | Trailers and teasers |
+| GET | `/personalized` | Optional | Smart recommendations |
+
+### Watchlist — `/api/watchlist`
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| GET | `/` | ✅ | Get user's watchlist |
+| POST | `/` | ✅ | Add movie to watchlist |
+| DELETE | `/:movieId` | ✅ | Remove from watchlist |
+| GET | `/check/:movieId` | ✅ | Check if movie is in watchlist |
+
+### Ratings — `/api/ratings`
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| POST | `/` | ✅ | Rate a movie |
+| GET | `/movie/:movieId` | ❌ | Get ratings for a movie |
+| GET | `/user` | ✅ | Get user's own ratings |
+| DELETE | `/:movieId` | ✅ | Delete a rating |
+
+### Users — `/api/users`
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| GET | `/recently-viewed` | ✅ | Get recently viewed movies |
+| DELETE | `/recently-viewed` | ✅ | Clear watch history |
+| PUT | `/genres` | ✅ | Update favorite genres |
+
+---
+
+## ⚙️ How Personalized Recommendations Work
+
+The `/api/movies/personalized` endpoint uses a 3-tier fallback logic:
+
+1. **Recently watched** → Fetches TMDB recommendations + similar movies based on the last movie you viewed, deduplicates them, and returns the top 20
+2. **Favorite genres** → If no watch history, discovers movies by your top selected genre
+3. **Trending fallback** → If no history or genres, returns this week's trending movies
+
+---
+
+## 🔒 Security Features
+
+- Passwords hashed with **bcryptjs** (12 salt rounds)
+- JWT tokens expire after **7 days**
+- HTTP headers secured with **Helmet**
+- API rate limited to **100 requests per 15 minutes**
+- CORS restricted to the frontend origin
+- Input validation on all auth routes via **express-validator**
+- Passwords never returned in API responses (`select: false`)
+
+---
+
+## 🌍 Environment Variables
+
+### Backend `.env`
+| Variable | Required | Description |
+|---|---|---|
+| `PORT` | No | Server port (default: 5000) |
+| `NODE_ENV` | No | `development` or `production` |
+| `MONGO_URI` | ✅ | MongoDB Atlas connection string |
+| `JWT_SECRET` | ✅ | Secret key for signing tokens (min 32 chars) |
+| `JWT_EXPIRES_IN` | No | Token expiry (default: 7d) |
+| `TMDB_API_KEY` | ✅ | Your TMDB API key |
+| `CLIENT_URL` | No | Frontend URL for CORS (default: localhost:5173) |
+
+### Frontend `.env`
+| Variable | Required | Description |
+|---|---|---|
+| `VITE_API_URL` | No | Backend API base URL (default: localhost:5000/api) |
+
+---
+
+## 📦 Scripts
+
+### Backend
+```bash
+npm run dev      # Start with nodemon (auto-restart on changes)
+npm start        # Start without nodemon (production)
 ```
 
-### Movies (public)
-```
-GET /api/movies/trending
-GET /api/movies/popular
-GET /api/movies/top-rated
-GET /api/movies/upcoming
-GET /api/movies/now-playing
-GET /api/movies/search?query=...
-GET /api/movies/:id
-GET /api/movies/:id/similar
-GET /api/movies/:id/recommendations
-GET /api/movies/:id/videos
-GET /api/movies/genre/:genreId
-GET /api/movies/genres/list
-GET /api/movies/personalized  (auth optional)
-```
-
-### Watchlist (auth required)
-```
-GET    /api/watchlist
-POST   /api/watchlist
-DELETE /api/watchlist/:movieId
-GET    /api/watchlist/check/:movieId
-```
-
-### Ratings (auth required)
-```
-POST   /api/ratings
-GET    /api/ratings/user
-GET    /api/ratings/movie/:movieId
-DELETE /api/ratings/:movieId
+### Frontend
+```bash
+npm run dev      # Start Vite dev server
+npm run build    # Build for production
+npm run preview  # Preview production build locally
 ```
 
 ---
 
-## ✨ Features
+## 🤝 Contributing
 
-- 🎬 TMDB API integration (trending, popular, top-rated, search)
-- 🤖 Personalized recommendations (content-based filtering)
-- 📋 Watchlist with MongoDB persistence
-- ⭐ Half-star rating system with reviews
-- 🎥 YouTube trailer modal
-- 🔍 Debounced search with instant results
-- ♾️ Infinite scroll on browse pages
-- 🏠 Hero section with auto-rotating featured movies
-- 🎭 Browse by genre
-- 🕐 Watch history tracking
-- 🛡️ JWT auth with protected routes
-- 📱 Fully responsive (mobile/tablet/desktop)
-- ✨ Framer Motion page transitions + card animations
-- 💀 Skeleton loading states
-- 🌌 Dark cinematic theme with glassmorphism
+Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
 
 ---
 
-## 📸 Pages
+## 📄 License
 
-| Page | Route |
-|------|-------|
-| Landing | `/` (guest) |
-| Home Dashboard | `/` (logged in) |
-| Login | `/login` |
-| Register | `/register` |
-| Movie Details | `/movie/:id` |
-| Search | `/search?q=...` |
-| Genre | `/genre/:id` |
-| Browse | `/movies` |
-| Watchlist | `/watchlist` |
-| Profile | `/profile` |
+[MIT](https://choosealicense.com/licenses/mit/)
 
 ---
 
-Built with 🎬 by CineLens
+## 🙏 Acknowledgements
+
+- [TMDB](https://www.themoviedb.org/) for the movie data API
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for the free database tier
+- [Tailwind CSS](https://tailwindcss.com/) for the utility-first styling
+- [Framer Motion](https://www.framer.com/motion/) for the smooth animations
